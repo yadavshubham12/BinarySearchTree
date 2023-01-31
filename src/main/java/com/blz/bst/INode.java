@@ -12,16 +12,13 @@ class INode<T extends Comparable<T>> {
 
 class BinaryTree<T extends Comparable<T>> {
     INode<T> root;
-    int size;
 
     BinaryTree() {
         root = null;
-        size = 0;
     }
 
     void insert(T key) {
         root = insertRecursive(root, key);
-        size++;
     }
 
     INode<T> insertRecursive(INode<T> current, T key) {
@@ -40,9 +37,26 @@ class BinaryTree<T extends Comparable<T>> {
         return current;
     }
 
-    int size() {
-        return size;
+    boolean search(T key) {
+        return searchRecursive(root, key);
     }
+
+    boolean searchRecursive(INode<T> current, T key) {
+        if (current == null) {
+            return false;
+        }
+
+        if (current.key.compareTo(key) == 0) {
+            return true;
+        }
+
+        if (key.compareTo(current.key) < 0) {
+            return searchRecursive(current.left, key);
+        }
+
+        return searchRecursive(current.right, key);
+    }
+
     public static void main(String[] args) {
         BinaryTree<Integer> bt = new BinaryTree<Integer>();
         bt.insert(56);
@@ -58,7 +72,9 @@ class BinaryTree<T extends Comparable<T>> {
         bt.insert(11);
         bt.insert(3);
         bt.insert(16);
-        System.out.println("Tree size: " + bt.size());
+
+        System.out.println("63 found: " + bt.search(63));
+
+
     }
 }
-
